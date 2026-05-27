@@ -1,0 +1,19 @@
+{
+  "redirects": [
+    {
+      "source": "/checkout",
+      "destination": "https://70uu25-va.myshopify.com/checkout",
+      "permanent": false
+    },
+    {
+      "source": "/cart/:path*",
+      "destination": "https://70uu25-va.myshopify.com/cart/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/checkouts/:path*",
+      "destination": "https://70uu25-va.myshopify.com/checkouts/:path*",
+      "permanent": false
+    }
+  ]
+}
