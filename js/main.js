@@ -173,7 +173,7 @@ function shopifyCheckout() {
     const items = Cart.get();
     if (!items.length) return;
 
-    const lineItems = [];
+    const variantItems = [];
 
     items.forEach(function(item) {
         const id   = item.id;
@@ -183,23 +183,43 @@ function shopifyCheckout() {
         if (id === 'boxer-pink' || id === 'boxer-black') {
             const color     = id === 'boxer-black' ? 'Black' : 'Pink';
             const variantId = (SHOPIFY_VARIANTS.boxer[size] || {})[color];
-            if (variantId) lineItems.push(variantId + ':' + qty);
+            if (variantId) variantItems.push({ id: variantId, qty: qty });
 
         } else if (id === 'boxer-2pack') {
-            // 2-pack sends both colors at the same size
             const bv = (SHOPIFY_VARIANTS.boxer[size] || {}).Black;
             const pv = (SHOPIFY_VARIANTS.boxer[size] || {}).Pink;
-            if (bv) lineItems.push(bv + ':' + qty);
-            if (pv) lineItems.push(pv + ':' + qty);
+            if (bv) variantItems.push({ id: bv, qty: qty });
+            if (pv) variantItems.push({ id: pv, qty: qty });
         }
-        // Barrel Denim / Grommet Tee not yet in Shopify — skipped
     });
 
-    const url = lineItems.length
-        ? 'https://' + SHOPIFY_DOMAIN + '/cart/' + lineItems.join(',') + '/checkout'
-        : 'https://' + SHOPIFY_DOMAIN;
+    if (!variantItems.length) return;
 
-    window.location.href = url;
+    /* POST directly to Shopify cart — bypasses storefront domain redirect */
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'https://' + SHOPIFY_DOMAIN + '/cart/add';
+    form.style.display = 'none';
+
+    variantItems.forEach(function(v, i) {
+        var idEl  = document.createElement('input');
+        idEl.name = 'items[' + i + '][id]';
+        idEl.value = v.id;
+        form.appendChild(idEl);
+
+        var qEl  = document.createElement('input');
+        qEl.name = 'items[' + i + '][quantity]';
+        qEl.value = v.qty;
+        form.appendChild(qEl);
+    });
+
+    var ret = document.createElement('input');
+    ret.name  = 'return_to';
+    ret.value = '/checkout';
+    form.appendChild(ret);
+
+    document.body.appendChild(form);
+    form.submit();
 }
 
 /* Wire checkout button (delegated so it works after SPA swaps) */
