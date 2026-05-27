@@ -227,6 +227,26 @@ document.addEventListener('click', function(e) {
     if (e.target && e.target.id === 'btn-checkout') shopifyCheckout();
 });
 
+/* ── Buy Now button — add to cart then immediately checkout ── */
+document.addEventListener('click', function(e) {
+    const btn = e.target.closest('.btn-buy-now');
+    if (!btn) return;
+    const raw = btn.dataset.product;
+    if (!raw) return;
+    const product = JSON.parse(raw);
+    const sizeBtn = document.querySelector('.size-btn.active');
+    if (!sizeBtn) {
+        const opts = document.querySelector('.size-options');
+        if (opts) {
+            opts.classList.add('shake');
+            opts.addEventListener('animationend', () => opts.classList.remove('shake'), { once: true });
+        }
+        return;
+    }
+    Cart.add(product, sizeBtn.textContent.trim());
+    shopifyCheckout();
+});
+
 /* ── Delegated add-to-cart (survives SPA swaps) ── */
 document.addEventListener('click', e => {
     const btn = e.target.closest('.btn-add-cart');

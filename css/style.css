@@ -712,6 +712,25 @@ body.page-inner {
     border-color: var(--red);
 }
 
+.btn-buy-now {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    border: 1px solid var(--black);
+    background: none;
+    color: var(--black);
+    padding: 14px 24px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 8px;
+    transition: background 0.2s, color 0.2s;
+}
+.btn-buy-now:hover {
+    background: var(--black);
+    color: var(--white);
+}
+
 @media (max-width: 768px) {
     .product-page {
         grid-template-columns: 1fr;
