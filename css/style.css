@@ -712,6 +712,30 @@ body.page-inner {
     border-color: var(--red);
 }
 
+/* Coming Soon notice on product page */
+.product-coming-soon-notice {
+    margin-top: 24px;
+    padding: 20px 24px;
+    border: 1px solid var(--border);
+    text-align: center;
+}
+.product-coming-soon-notice span {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--black);
+    margin-bottom: 8px;
+}
+.product-coming-soon-notice p {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin: 0;
+}
+
 .btn-buy-now {
     font-family: var(--mono);
     font-size: 11px;
