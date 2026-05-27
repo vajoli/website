@@ -193,10 +193,11 @@ function shopifyCheckout() {
             if (variantId) lineItems.push({ merchandiseId: 'gid://shopify/ProductVariant/' + variantId, quantity: qty });
 
         } else if (id === 'boxer-2pack') {
-            const bv = (SHOPIFY_VARIANTS.boxer[size] || {}).Black;
-            const pv = (SHOPIFY_VARIANTS.boxer[size] || {}).Pink;
-            if (bv) lineItems.push({ merchandiseId: 'gid://shopify/ProductVariant/' + bv, quantity: qty });
-            if (pv) lineItems.push({ merchandiseId: 'gid://shopify/ProductVariant/' + pv, quantity: qty });
+            lineItems.push({
+                merchandiseId: 'gid://shopify/ProductVariant/48414956683489',
+                quantity: qty,
+                attributes: [{ key: 'Size', value: size }]
+            });
 
         } else if (id === 'barrel-denim') {
             const variantId = (SHOPIFY_VARIANTS['barrel-denim'] || {})[size];
