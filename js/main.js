@@ -166,6 +166,13 @@ const SHOPIFY_VARIANTS = {
         S:  { Black: 48414327079137, Pink: 48414327111905 },
         M:  { Black: 48414327144673, Pink: 48414327177441 },
         L:  { Black: 48414327210209, Pink: 48414327242977 }
+    },
+    'barrel-denim': {
+        XS: 48414916149473,
+        S:  48414916116705,
+        M:  48414916083937,
+        L:  48414916051169,
+        XL: 48414916018401
     }
 };
 
@@ -190,6 +197,10 @@ function shopifyCheckout() {
             const pv = (SHOPIFY_VARIANTS.boxer[size] || {}).Pink;
             if (bv) lineItems.push({ merchandiseId: 'gid://shopify/ProductVariant/' + bv, quantity: qty });
             if (pv) lineItems.push({ merchandiseId: 'gid://shopify/ProductVariant/' + pv, quantity: qty });
+
+        } else if (id === 'barrel-denim') {
+            const variantId = (SHOPIFY_VARIANTS['barrel-denim'] || {})[size];
+            if (variantId) lineItems.push({ merchandiseId: 'gid://shopify/ProductVariant/' + variantId, quantity: qty });
         }
     });
 
