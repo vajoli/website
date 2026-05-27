@@ -196,7 +196,7 @@ function shopifyCheckout() {
     });
 
     const url = lineItems.length
-        ? 'https://' + SHOPIFY_DOMAIN + '/cart/' + lineItems.join(',')
+        ? 'https://' + SHOPIFY_DOMAIN + '/cart/' + lineItems.join(',') + '/checkout'
         : 'https://' + SHOPIFY_DOMAIN;
 
     window.location.href = url;
