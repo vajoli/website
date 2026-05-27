@@ -210,8 +210,13 @@ function shopifyCheckout() {
     })
     .then(function(r) { return r.json(); })
     .then(function(data) {
-        const url = data.data.cartCreate.cart.checkoutUrl;
-        if (url) window.location.href = url;
+        var url = data.data.cartCreate.cart.checkoutUrl;
+        if (url) {
+            /* Replace storefront domain with myshopify domain to avoid SSL issues */
+            url = url.replace('https://vajoli.store', 'https://' + SHOPIFY_DOMAIN)
+                     .replace('https://www.vajoli.store', 'https://' + SHOPIFY_DOMAIN);
+            window.location.href = url;
+        }
     })
     .catch(function() {
         /* Fallback */
