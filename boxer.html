@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boxer Shorts - VAJOLI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=6">
+</head>
+<body class="page-inner page-boxer">
+
+    <div class="grain-overlay"></div>
+
+    <header class="site-header">
+        <div class="header-left">
+            <a href="index.html" class="site-logo">
+                <img src="assets/logo.png" alt="Vajoli">
+            </a>
+        </div>
+        <nav class="site-nav" aria-label="Main navigation">
+            <a href="shop.html" class="active">Shop</a>
+            <a href="lookbook.html">Lookbook</a>
+            <a href="contact.html">Contact</a>
+            <a href="https://www.instagram.com/vaj0li/" target="_blank" rel="noopener">Instagram</a>
+            <a href="cart.html" class="cart-link">Cart<span class="cart-count"></span></a>
+        </nav>
+    </header>
+
+    <main>
+        <a href="shop.html" class="back-link">&#8592; Shop</a>
+        <span class="back-link__rule"></span>
+        <div class="product-page">
+
+            <!-- Gallery — thumbnails act as color selector -->
+            <div class="product-gallery">
+                <div class="product-gallery__main">
+                    <img id="main-product-img"
+                         src="assets/products/boxer-pink.png"
+                         alt="Boxer Shorts">
+                </div>
+                <div class="product-gallery__thumbs" id="boxer-thumbs">
+                    <button class="thumb active"
+                            data-src="assets/products/boxer-pink.png"
+                            data-color="Pink"
+                            onclick="pickBoxerColor(this)"
+                            aria-label="Pink">
+                        <img src="assets/products/boxer-pink.png" alt="Pink">
+                    </button>
+                    <button class="thumb"
+                            data-src="assets/products/boxer-black.png"
+                            data-color="Black"
+                            onclick="pickBoxerColor(this)"
+                            aria-label="Black">
+                        <img src="assets/products/boxer-black.png" alt="Black">
+                    </button>
+                </div>
+            </div>
+
+            <!-- Info -->
+            <div class="product-info">
+                <h1 class="product-info__name">Boxer Shorts</h1>
+                <p class="product-info__price" id="boxer-price">&#165; 5,000</p>
+                <div class="product-info__rule"></div>
+
+                <p class="product-info__desc">
+                    Premium heavyweight cotton boxer brief. Stretch elasticated waistband with signature "Eat My Ass" lettering in contrast type. Relaxed fit, runs true to size.
+                </p>
+
+                <!-- Pack selector -->
+                <div class="product-info__sizes">
+                    <span class="size-label">Pack</span>
+                    <div class="pack-options">
+                        <button class="pack-btn active" data-pack="single" onclick="pickBoxerPack(this)">
+                            Single
+                        </button>
+                        <button class="pack-btn" data-pack="2pack" onclick="pickBoxerPack(this)">
+                            2-Pack <span class="pack-save">Save &#165;2,000</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Color selector (dimmed when 2-pack selected) -->
+                <div class="product-info__sizes">
+                    <span class="size-label">Color</span>
+                    <div class="pack-options" id="boxer-color-options">
+                        <button class="pack-btn active" data-color="Pink" data-src="assets/products/boxer-pink.png" onclick="pickBoxerColor2(this)">
+                            Pink
+                        </button>
+                        <button class="pack-btn" data-color="Black" data-src="assets/products/boxer-black.png" onclick="pickBoxerColor2(this)">
+                            Black
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Size selector -->
+                <div class="product-info__sizes">
+                    <span class="size-label">Size</span>
+                    <div class="size-options">
+                        <button class="size-btn" onclick="selectSize(this)">XS</button>
+                        <button class="size-btn" onclick="selectSize(this)">S</button>
+                        <button class="size-btn" onclick="selectSize(this)">M</button>
+                        <button class="size-btn" onclick="selectSize(this)">L</button>
+                        <button class="size-btn" onclick="selectSize(this)">XL</button>
+                    </div>
+                </div>
+
+                <button class="btn-add-cart"
+                        data-product='{"id":"boxer-pink","name":"Boxer Shorts Pink","price":5000,"image":"assets/products/boxer-pink.png"}'>
+                    Add to cart
+                </button>
+            </div>
+
+        </div>
+
+        <script>
+        var _boxerPack = 'single';
+
+        /* Switch pack (single / 2-pack) */
+        function pickBoxerPack(btn) {
+            document.querySelectorAll('.pack-btn[data-pack]').forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            _boxerPack = btn.dataset.pack;
+
+            var thumbs      = document.getElementById('boxer-thumbs');
+            var colorOpts   = document.getElementById('boxer-color-options');
+            var priceEl     = document.getElementById('boxer-price');
+            var addBtn      = document.querySelector('.btn-add-cart');
+
+            if (_boxerPack === '2pack') {
+                thumbs.classList.add('is-disabled');
+                colorOpts.classList.add('is-disabled');
+                priceEl.innerHTML = '&#165; 8,000';
+                addBtn.dataset.product = JSON.stringify({
+                    id:    'boxer-2pack',
+                    name:  'Boxer Shorts 2-Pack (Pink + Black)',
+                    price: 8000,
+                    image: 'assets/products/boxer-pink.png'
+                });
+            } else {
+                thumbs.classList.remove('is-disabled');
+                colorOpts.classList.remove('is-disabled');
+                priceEl.innerHTML = '&#165; 5,000';
+                /* Restore to current color */
+                var activeColor = document.querySelector('#boxer-color-options .pack-btn.active');
+                var color = activeColor ? activeColor.dataset.color : 'Pink';
+                var src   = activeColor ? activeColor.dataset.src   : 'assets/products/boxer-pink.png';
+                addBtn.dataset.product = JSON.stringify({
+                    id:    'boxer-' + color.toLowerCase(),
+                    name:  'Boxer Shorts ' + color,
+                    price: 5000,
+                    image: src
+                });
+            }
+        }
+
+        /* Switch color via thumbnail */
+        function pickBoxerColor(btn) {
+            if (_boxerPack === '2pack') return;
+            document.querySelectorAll('#boxer-thumbs .thumb').forEach(function(t) { t.classList.remove('active'); });
+            btn.classList.add('active');
+            /* Keep color-option buttons in sync */
+            var color = btn.dataset.color;
+            document.querySelectorAll('#boxer-color-options .pack-btn').forEach(function(b) {
+                b.classList.toggle('active', b.dataset.color === color);
+            });
+            _swapBoxerMain(btn.dataset.src, color);
+        }
+
+        /* Switch color via color buttons */
+        function pickBoxerColor2(btn) {
+            if (_boxerPack === '2pack') return;
+            document.querySelectorAll('#boxer-color-options .pack-btn').forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            /* Keep thumbs in sync */
+            var color = btn.dataset.color;
+            document.querySelectorAll('#boxer-thumbs .thumb').forEach(function(t) {
+                t.classList.toggle('active', t.dataset.color === color);
+            });
+            _swapBoxerMain(btn.dataset.src, color);
+        }
+
+        function _swapBoxerMain(src, color) {
+            var main = document.getElementById('main-product-img');
+            if (main) {
+                main.style.opacity = '0';
+                setTimeout(function() { main.src = src; main.style.opacity = '1'; }, 200);
+            }
+            if (_boxerPack === 'single') {
+                var addBtn = document.querySelector('.btn-add-cart');
+                if (addBtn) {
+                    addBtn.dataset.product = JSON.stringify({
+                        id:    'boxer-' + color.toLowerCase(),
+                        name:  'Boxer Shorts ' + color,
+                        price: 5000,
+                        image: src
+                    });
+                }
+            }
+        }
+        </script>
+    </main>
+
+    <footer class="site-footer">
+        <span class="site-footer__copy">&#169; Vajoli 2026</span>
+        <ul class="site-footer__links">
+            <li><a href="https://www.instagram.com/vaj0li/" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </footer>
+
+    <div id="spotify-mini"></div>
+    <script src="js/main.js?v=7"></script>
+</body>
+</html>

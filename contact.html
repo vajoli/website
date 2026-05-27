@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact — VAJOLI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=6">
+</head>
+<body class="page-inner">
+
+    <div class="grain-overlay"></div>
+
+    <header class="site-header">
+        <div class="header-left">
+            <a href="index.html" class="site-logo">
+                <img src="assets/logo.png" alt="Vajoli">
+            </a>
+        </div>
+        <nav class="site-nav" aria-label="Main navigation">
+            <a href="shop.html">Shop</a>
+            <a href="lookbook.html">Lookbook</a>
+            <a href="contact.html" class="active">Contact</a>
+            <a href="https://www.instagram.com/vaj0li/" target="_blank" rel="noopener">Instagram</a>
+            <a href="cart.html" class="cart-link">Cart<span class="cart-count"></span></a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-heading">
+            <h1>Contact</h1>
+            <div class="page-heading__rule"></div>
+        </div>
+
+        <div class="contact-main">
+            <p class="contact-sub">Questions, collaborations, press</p>
+
+            <form class="contact-form" action="#" method="post" novalidate>
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Your name"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="your@email.com"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea
+                        id="message"
+                        name="message"
+                        placeholder="Write your message here"
+                        rows="5"
+                        required
+                    ></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Send message</button>
+
+            </form>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <span class="site-footer__copy">© Vajoli 2026</span>
+        <ul class="site-footer__links">
+            <li><a href="https://www.instagram.com/vaj0li/" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+    </footer>
+
+    <div id="spotify-mini"></div>
+    <script src="js/main.js?v=7"></script>
+</body>
+</html>

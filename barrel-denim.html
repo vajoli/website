@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barrel Denim — VAJOLI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=6">
+</head>
+<body class="page-inner">
+
+    <div class="grain-overlay"></div>
+
+    <header class="site-header">
+        <div class="header-left">
+            <a href="index.html" class="site-logo">
+                <img src="assets/logo.png" alt="Vajoli">
+            </a>
+        </div>
+        <nav class="site-nav" aria-label="Main navigation">
+            <a href="shop.html" class="active">Shop</a>
+            <a href="lookbook.html">Lookbook</a>
+            <a href="contact.html">Contact</a>
+            <a href="https://www.instagram.com/vaj0li/" target="_blank" rel="noopener">Instagram</a>
+            <a href="cart.html" class="cart-link">Cart<span class="cart-count"></span></a>
+        </nav>
+    </header>
+
+    <main>
+        <a href="shop.html" class="back-link">&#8592; Shop</a>
+        <span class="back-link__rule"></span>
+        <div class="product-page">
+
+            <!-- Gallery -->
+            <div class="product-gallery">
+                <div class="product-gallery__main">
+                    <img id="main-product-img"
+                         src="assets/products/barrel-denim-front.jpg"
+                         alt="Barrel Denim">
+                </div>
+                <div class="product-gallery__thumbs">
+                    <button class="thumb active" onclick="switchProductImage('assets/products/barrel-denim-front.jpg', this)" aria-label="Front view">
+                        <img src="assets/products/barrel-denim-front.jpg" alt="Front">
+                    </button>
+                    <button class="thumb" onclick="switchProductImage('assets/products/barrel-denim-back.jpg', this)" aria-label="Back view">
+                        <img src="assets/products/barrel-denim-back.jpg" alt="Back">
+                    </button>
+                    <!-- Add more detail shots here -->
+                </div>
+            </div>
+
+            <!-- Info -->
+            <div class="product-info">
+                <h1 class="product-info__name">Barrel Denim</h1>
+                <p class="product-info__price">&#165; 32,000</p>
+                <div class="product-info__rule"></div>
+
+                <p class="product-info__desc">
+                    Raw black denim cut in an exaggerated barrel silhouette. High rise with a structured waistband, expanding through the hip and thigh before tapering at the ankle. Twin silver grommets at the back waistband. Unwashed, will fade with wear.
+                </p>
+
+                <div class="product-info__sizes">
+                    <span class="size-label">Size</span>
+                    <div class="size-options">
+                        <button class="size-btn" onclick="selectSize(this)">XS</button>
+                        <button class="size-btn" onclick="selectSize(this)">S</button>
+                        <button class="size-btn" onclick="selectSize(this)">M</button>
+                        <button class="size-btn" onclick="selectSize(this)">L</button>
+                        <button class="size-btn" onclick="selectSize(this)">XL</button>
+                    </div>
+                </div>
+
+                <button class="btn-add-cart" data-product='{"id":"barrel-denim","name":"Barrel Denim","price":32000,"image":"assets/products/barrel-denim-front.jpg"}'>Add to cart</button>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <span class="site-footer__copy">© Vajoli 2026</span>
+        <ul class="site-footer__links">
+            <li><a href="https://www.instagram.com/vaj0li/" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </footer>
+
+    <div id="spotify-mini"></div>
+    <script src="js/main.js?v=7"></script>
+</body>
+</html>
