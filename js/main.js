@@ -173,7 +173,7 @@ function shopifyCheckout() {
     const items = Cart.get();
     if (!items.length) return;
 
-    const variantItems = [];
+    const lineItems = [];
 
     items.forEach(function(item) {
         const id   = item.id;
@@ -183,43 +183,40 @@ function shopifyCheckout() {
         if (id === 'boxer-pink' || id === 'boxer-black') {
             const color     = id === 'boxer-black' ? 'Black' : 'Pink';
             const variantId = (SHOPIFY_VARIANTS.boxer[size] || {})[color];
-            if (variantId) variantItems.push({ id: variantId, qty: qty });
+            if (variantId) lineItems.push({ merchandiseId: 'gid://shopify/ProductVariant/' + variantId, quantity: qty });
 
         } else if (id === 'boxer-2pack') {
             const bv = (SHOPIFY_VARIANTS.boxer[size] || {}).Black;
             const pv = (SHOPIFY_VARIANTS.boxer[size] || {}).Pink;
-            if (bv) variantItems.push({ id: bv, qty: qty });
-            if (pv) variantItems.push({ id: pv, qty: qty });
+            if (bv) lineItems.push({ merchandiseId: 'gid://shopify/ProductVariant/' + bv, quantity: qty });
+            if (pv) lineItems.push({ merchandiseId: 'gid://shopify/ProductVariant/' + pv, quantity: qty });
         }
     });
 
-    if (!variantItems.length) return;
+    if (!lineItems.length) return;
 
-    /* POST directly to Shopify cart — bypasses storefront domain redirect */
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = 'https://' + SHOPIFY_DOMAIN + '/cart/add';
-    form.style.display = 'none';
+    /* Use Storefront API to create cart and get checkout URL */
+    const query = `mutation cartCreate($lines: [CartLineInput!]!) {
+        cartCreate(input: { lines: $lines }) {
+            cart { checkoutUrl }
+            userErrors { message }
+        }
+    }`;
 
-    variantItems.forEach(function(v, i) {
-        var idEl  = document.createElement('input');
-        idEl.name = 'items[' + i + '][id]';
-        idEl.value = v.id;
-        form.appendChild(idEl);
-
-        var qEl  = document.createElement('input');
-        qEl.name = 'items[' + i + '][quantity]';
-        qEl.value = v.qty;
-        form.appendChild(qEl);
+    fetch('https://' + SHOPIFY_DOMAIN + '/api/2024-01/graphql.json', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: query, variables: { lines: lineItems } })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+        const url = data.data.cartCreate.cart.checkoutUrl;
+        if (url) window.location.href = url;
+    })
+    .catch(function() {
+        /* Fallback */
+        window.location.href = 'https://' + SHOPIFY_DOMAIN;
     });
-
-    var ret = document.createElement('input');
-    ret.name  = 'return_to';
-    ret.value = '/checkout';
-    form.appendChild(ret);
-
-    document.body.appendChild(form);
-    form.submit();
 }
 
 /* Wire checkout button (delegated so it works after SPA swaps) */

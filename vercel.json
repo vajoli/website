@@ -6,6 +6,11 @@
       "permanent": false
     },
     {
+      "source": "/cart/c/:path*",
+      "destination": "https://70uu25-va.myshopify.com/cart/c/:path*",
+      "permanent": false
+    },
+    {
       "source": "/cart/:path*",
       "destination": "https://70uu25-va.myshopify.com/cart/:path*",
       "permanent": false
