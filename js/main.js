@@ -384,6 +384,19 @@ function selectBoxerColor(btn) {
     }
 }
 
+/* ── Barrel Denim launch price (32,000 for 20 days, then 36,000) ── */
+(function () {
+    const LAUNCH = new Date('2026-05-28T00:00:00Z');
+    const DAYS   = 20;
+    const now    = new Date();
+    const expired = (now - LAUNCH) > DAYS * 24 * 60 * 60 * 1000;
+    if (expired) {
+        document.querySelectorAll('.product-info__price-wrap, .denim-card-price').forEach(function(el) {
+            el.classList.add('price-expired');
+        });
+    }
+}());
+
 /* ── Spotify mini player (inner pages) ── */
 const _playIcon  = `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z"/></svg>`;
 const _pauseIcon = `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"/></svg>`;

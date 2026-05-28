@@ -712,6 +712,36 @@ body.page-inner {
     border-color: var(--red);
 }
 
+/* Launch price — red current, strikethrough future */
+.product-info__price-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+}
+.price-launch {
+    color: var(--red) !important;
+}
+.price-future {
+    text-decoration: line-through;
+    opacity: 0.45;
+}
+/* After launch period: hide future, show regular */
+.price-expired .price-launch { display: none; }
+.price-expired .price-future {
+    text-decoration: none;
+    opacity: 1;
+    color: var(--black);
+}
+/* Shop card launch price */
+.denim-card-price {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+}
+.denim-card-price .price-future {
+    font-size: 10px;
+}
+
 /* Coming Soon notice on product page */
 .product-coming-soon-notice {
     margin-top: 24px;
