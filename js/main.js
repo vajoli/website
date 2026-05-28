@@ -121,6 +121,51 @@ function showCartToast(name) {
     }, 2500);
 }
 
+/* ── Currency detection & conversion ── */
+window._fx = { code: 'JPY', symbol: '¥', rate: 1 };
+
+const _currencySymbols = {
+    JPY:'¥', USD:'$', EUR:'€', GBP:'£', AUD:'A$', CAD:'C$',
+    CHF:'CHF', CNY:'¥', KRW:'₩', HKD:'HK$', SGD:'S$', MXN:'$',
+    BRL:'R$', INR:'₹', SEK:'kr', NOK:'kr', DKK:'kr', NZD:'NZ$',
+    ZAR:'R', AED:'AED', TWD:'NT$', THB:'฿', PHP:'₱', IDR:'Rp'
+};
+
+function formatPrice(jpy) {
+    const { code, symbol, rate } = window._fx;
+    if (code === 'JPY') return '¥ ' + Math.round(jpy).toLocaleString();
+    const converted = jpy * rate;
+    const rounded = ['JPY','KRW','IDR'].includes(code)
+        ? Math.round(converted).toLocaleString()
+        : converted.toFixed(2);
+    return symbol + ' ' + rounded;
+}
+
+function applyPrices() {
+    document.querySelectorAll('[data-price-jpy]').forEach(function(el) {
+        el.textContent = formatPrice(parseInt(el.dataset.priceJpy));
+    });
+}
+
+(function detectCurrency() {
+    fetch('https://ipapi.co/json/')
+        .then(function(r) { return r.json(); })
+        .then(function(geo) {
+            const code = geo.currency || 'JPY';
+            if (code === 'JPY') return;
+            return fetch('https://open.er-api.com/v6/latest/JPY')
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    const rate = data.rates[code];
+                    if (!rate) return;
+                    window._fx = { code: code, symbol: _currencySymbols[code] || code, rate: rate };
+                    applyPrices();
+                    renderCart();
+                });
+        })
+        .catch(function() {});
+}());
+
 /* ── Cart page render ── */
 function renderCart() {
     const list     = document.getElementById('cart-list');
@@ -130,7 +175,7 @@ function renderCart() {
     const items = Cart.get();
     if (!items.length) {
         list.innerHTML = '<p class="cart-empty">Your cart is empty.</p>';
-        if (subtotal) subtotal.textContent = '¥ 0';
+        if (subtotal) subtotal.textContent = formatPrice(0);
         if (checkout) checkout.disabled = true;
         return;
     }
@@ -143,18 +188,18 @@ function renderCart() {
             <div class="cart-row__info">
                 <span class="cart-row__name">${item.name}</span>
                 <span class="cart-row__meta">${item.size}</span>
-                <span class="cart-row__price-mobile">¥ ${(item.price * item.qty).toLocaleString()}</span>
+                <span class="cart-row__price-mobile">${formatPrice(item.price * item.qty)}</span>
             </div>
             <div class="cart-row__qty">
                 <button class="qty-btn" onclick="Cart.setQty('${item.id}','${item.size}',${item.qty - 1})">−</button>
                 <span class="qty-val">${item.qty}</span>
                 <button class="qty-btn" onclick="Cart.setQty('${item.id}','${item.size}',${item.qty + 1})">+</button>
             </div>
-            <span class="cart-row__price">¥ ${(item.price * item.qty).toLocaleString()}</span>
+            <span class="cart-row__price">${formatPrice(item.price * item.qty)}</span>
             <button class="cart-row__remove" onclick="Cart.remove('${item.id}','${item.size}')" aria-label="Remove">×</button>
         </div>
     `).join('');
-    if (subtotal) subtotal.textContent = '¥ ' + Cart.total().toLocaleString();
+    if (subtotal) subtotal.textContent = formatPrice(Cart.total());
 }
 
 /* ── Shopify checkout ── */
@@ -325,6 +370,7 @@ document.addEventListener('click', e => {
             window.scrollTo(0, 0);
             document.querySelector('.site-header')?.classList.remove('is-scrolled');
             if (document.getElementById('cart-list')) renderCart();
+            applyPrices();
 
         } catch {
             location.href = url; // fallback: full reload

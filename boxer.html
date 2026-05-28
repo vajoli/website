@@ -61,7 +61,7 @@
             <!-- Info -->
             <div class="product-info">
                 <h1 class="product-info__name">Boxer Shorts</h1>
-                <p class="product-info__price" id="boxer-price">&#165; 5,000</p>
+                <p class="product-info__price" id="boxer-price" data-price-jpy="5000">&#165; 5,000</p>
                 <div class="product-info__rule"></div>
 
                 <p class="product-info__desc">
@@ -135,7 +135,8 @@
             if (_boxerPack === '2pack') {
                 thumbs.classList.add('is-disabled');
                 colorOpts.classList.add('is-disabled');
-                priceEl.innerHTML = '&#165; 8,000';
+                priceEl.dataset.priceJpy = '8000';
+                priceEl.textContent = (typeof formatPrice === 'function') ? formatPrice(8000) : '¥ 8,000';
                 addBtn.dataset.product = JSON.stringify({
                     id:    'boxer-2pack',
                     name:  'Boxer Shorts 2-Pack (Pink + Black)',
@@ -145,7 +146,8 @@
             } else {
                 thumbs.classList.remove('is-disabled');
                 colorOpts.classList.remove('is-disabled');
-                priceEl.innerHTML = '&#165; 5,000';
+                priceEl.dataset.priceJpy = '5000';
+                priceEl.textContent = (typeof formatPrice === 'function') ? formatPrice(5000) : '¥ 5,000';
                 /* Restore to current color */
                 var activeColor = document.querySelector('#boxer-color-options .pack-btn.active');
                 var color = activeColor ? activeColor.dataset.color : 'Pink';
