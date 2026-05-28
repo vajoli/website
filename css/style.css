@@ -766,6 +766,38 @@ body.page-inner {
     margin: 0;
 }
 
+/* Pre-order notice on product page */
+.product-preorder-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 20px;
+    margin-bottom: 4px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    background: transparent;
+}
+.preorder-badge {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--white);
+    background: var(--black);
+    padding: 3px 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.product-preorder-notice p {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin: 0;
+    line-height: 1.6;
+}
+
 .btn-buy-now {
     font-family: var(--mono);
     font-size: 11px;
