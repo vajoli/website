@@ -218,6 +218,9 @@ const SHOPIFY_VARIANTS = {
         M:  48414916083937,
         L:  48414916051169,
         XL: 48414916018401
+    },
+    'big-big-hat': {
+        'One Size': 48820628127969
     }
 };
 
@@ -247,6 +250,9 @@ function shopifyCheckout() {
         } else if (id === 'barrel-denim') {
             const variantId = (SHOPIFY_VARIANTS['barrel-denim'] || {})[size];
             if (variantId) lineItems.push({ merchandiseId: 'gid://shopify/ProductVariant/' + variantId, quantity: qty });
+
+        } else if (id === 'big-big-hat') {
+            lineItems.push({ merchandiseId: 'gid://shopify/ProductVariant/48820628127969', quantity: qty });
         }
     });
 
